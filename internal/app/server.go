@@ -23,7 +23,7 @@ func Run() {
 			return context.String(http.StatusOK, "Hey, I am UP")
 		})
 		e.GET("/", func(context echo.Context) error {
-			return context.Redirect(http.StatusPermanentRedirect, "website.dscnie.tech")
+			return context.Redirect(http.StatusPermanentRedirect, "https://website.dscnie.tech")
 		})
 		e.POST("/create", router.CreateShortLink)
 		e.GET("/short/:route", router.GetShortenLink)
