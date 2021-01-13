@@ -17,7 +17,7 @@ import (
 func Conn() bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("DbString")))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("PORT")))
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
@@ -55,7 +55,7 @@ func CreateLink(params models.CreateLinkModel) (string, bool) {
 
 // GetLink - getting the real link from the shortened link
 func GetLink(seacrhQuery models.SearchDb) (string, bool) {
-	links := constants.DbClient.Database("linkShortner").Collection("links")
+	links := constants.DbClient.Database("main").Collection("links")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	fmt.Println(seacrhQuery)
