@@ -28,7 +28,7 @@ func Conn() bool {
 
 // CreateLink - create the shorten link
 func CreateLink(params models.CreateLinkModel) (string, bool) {
-	links := constants.DbClient.Database("linkShortner").Collection("links")
+	links := constants.DbClient.Database("main").Collection("links")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	result := links.FindOne(ctx, params)
