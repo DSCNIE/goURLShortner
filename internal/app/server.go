@@ -22,6 +22,9 @@ func Run() {
 		e.GET("/home", func(context echo.Context) error {
 			return context.String(http.StatusOK, "Hey, I am UP")
 		})
+		e.GET("/", func(context echo.Context) error {
+			return context.Redirect(http.StatusPermanentRedirect, "website.dscnie.tech")
+		})
 		e.POST("/create", router.CreateShortLink)
 		e.GET("/short/:route", router.GetShortenLink)
 		e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
