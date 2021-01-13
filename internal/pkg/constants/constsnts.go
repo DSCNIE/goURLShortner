@@ -8,4 +8,4 @@ import (
 var DbClient mongo.Client
 
 // Host - host name
-var Host string = "localhost:5000"
+var Host string = "https://lit-sands-07141.herokuapp.com/"

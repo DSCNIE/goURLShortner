@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/iresharma/REST1/internal/pkg/database"
 	"github.com/iresharma/REST1/internal/pkg/router"
@@ -17,6 +18,9 @@ func Run() {
 		e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 			Format: "method=${method}, uri=${uri}, status=${status}\n",
 		}))
+		e.GET("/home", func(context echo.Context) error {
+			return context.String(http.StatusOK, "Hey, I am UP")
+		})
 		e.POST("/create", router.CreateShortLink)
 		e.GET("/short/:route", router.GetShortenLink)
 		e.Logger.Fatal(e.Start(":5000"))
