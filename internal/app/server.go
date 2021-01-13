@@ -23,7 +23,7 @@ func Run() {
 		})
 		e.POST("/create", router.CreateShortLink)
 		e.GET("/short/:route", router.GetShortenLink)
-		e.Logger.Fatal(e.Start(":5000"))
+		e.Logger.Fatal(e.Start(":80"))
 	} else {
 		fmt.Println("database did not connect")
 	}
