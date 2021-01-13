@@ -3,6 +3,7 @@ package app
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/iresharma/REST1/internal/pkg/database"
 	"github.com/iresharma/REST1/internal/pkg/router"
@@ -23,7 +24,7 @@ func Run() {
 		})
 		e.POST("/create", router.CreateShortLink)
 		e.GET("/short/:route", router.GetShortenLink)
-		e.Logger.Fatal(e.Start(":80"))
+		e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
 	} else {
 		fmt.Println("database did not connect")
 	}

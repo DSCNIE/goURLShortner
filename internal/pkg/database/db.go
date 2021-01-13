@@ -3,6 +3,7 @@ package database
 import (
 	"context"
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/iresharma/REST1/internal/pkg/constants"
@@ -16,7 +17,7 @@ import (
 func Conn() bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb+srv://dbmana:dbdbdb@cluster0.vccdx.mongodb.net/linkShortner?retryWrites=true&w=majority"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("DbString")))
 	if err != nil {
 		fmt.Println(err.Error())
 		return false
