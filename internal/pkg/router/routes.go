@@ -28,7 +28,7 @@ func CreateShortLink(context echo.Context) error {
 // GetShortenLink - route to redirect
 func GetShortenLink(context echo.Context) error {
 	finder := context.Param("route")
-	seacrhQuery := models.SearchDb{Route: constants.Host + "/short/" + finder}
+	seacrhQuery := models.SearchDb{Route: constants.Host + "/" + finder}
 	get, err := database.GetLink(seacrhQuery)
 	if !err {
 		return context.String(http.StatusNotFound, "Not Found")

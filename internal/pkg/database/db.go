@@ -17,6 +17,7 @@ import (
 func Conn() bool {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+	// client, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("DbString")))
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("DbString")))
 	if err != nil {
 		fmt.Println(err.Error())
@@ -34,23 +35,23 @@ func CreateLink(params models.CreateLinkModel) (string, bool) {
 	result := links.FindOne(ctx, params)
 	_, err := result.DecodeBytes()
 	if err != nil {
-		store := models.StoreDb{Link: params.Link, Title: params.Title, Shorten: constants.Host + "/short/" + params.Title}
+		store := models.StoreDb{Link: params.Link, Title: params.Title, Shorten: constants.Host + "/" + params.Title}
 		doc, err := links.InsertOne(ctx, store)
 		if err == nil {
 			fmt.Printf("%T", doc.InsertedID)
-			return constants.Host + "/short/" + params.Title, true
+			return constants.Host + "/" + params.Title, true
 		}
 		fmt.Println(err.Error())
 		return "", false
 	}
 	fmt.Println("reached here")
 	var short string = random.New().String(7)
-	tempStore := models.StoreDb{Link: params.Link, Title: params.Title, Shorten: constants.Host + "/short/" + short}
+	tempStore := models.StoreDb{Link: params.Link, Title: params.Title, Shorten: constants.Host + "/" + short}
 	_, errnew := links.InsertOne(ctx, tempStore)
 	if errnew != nil {
 		return "", false
 	}
-	return constants.Host + "/short/" + short, true
+	return constants.Host + "/" + short, true
 }
 
 // GetLink - getting the real link from the shortened link

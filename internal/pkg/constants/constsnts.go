@@ -1,6 +1,8 @@
 package constants
 
 import (
+	"os"
+
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -8,4 +10,6 @@ import (
 var DbClient mongo.Client
 
 // Host - host name
-var Host string = "https://lit-sands-07141.herokuapp.com/"
+var Host string = os.Getenv("host")
+
+// var Host string = "http://127.0.0.1:5000"

@@ -3,7 +3,6 @@ package app
 import (
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/iresharma/REST1/internal/pkg/database"
 	"github.com/iresharma/REST1/internal/pkg/router"
@@ -26,8 +25,13 @@ func Run() {
 			return context.Redirect(http.StatusPermanentRedirect, "https://website.dscnie.tech")
 		})
 		e.POST("/create", router.CreateShortLink)
-		e.GET("/short/:route", router.GetShortenLink)
-		e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
+		e.GET("/:route", router.GetShortenLink)
+		// e.GET("/:route", func(context echo.Context) error {
+		// 	fmt.Println(context.Param("route"))
+		// 	return context.String(http.StatusAccepted, "hi")
+		// })
+		// e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
+		e.Logger.Fatal((e.Start(":5000")))
 	} else {
 		fmt.Println("database did not connect")
 	}
