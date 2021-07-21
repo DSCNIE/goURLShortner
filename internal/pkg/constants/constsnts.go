@@ -10,6 +10,6 @@ import (
 var DbClient mongo.Client
 
 // Host - host name
-var Host string = os.Getenv("host")
+var Host string = os.Getenv("HOST")
 
 // var Host string = "http://127.0.0.1:5000"

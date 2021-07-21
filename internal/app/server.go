@@ -2,8 +2,8 @@ package app
 
 import (
 	"fmt"
+	"log"
 	"net/http"
-	"os"
 
 	"github.com/iresharma/REST1/internal/pkg/database"
 	"github.com/iresharma/REST1/internal/pkg/router"
@@ -14,6 +14,9 @@ import (
 // Run - runs the server
 func Run() {
 	e := echo.New()
+	e.Pre(middleware.HTTPSRedirect())
+	e.Pre(middleware.HTTPSNonWWWRedirect())
+	e.Use(middleware.Logger())
 	err := database.Conn()
 	if err {
 		e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
@@ -27,8 +30,9 @@ func Run() {
 		})
 		e.POST("/create", router.CreateShortLink)
 		e.GET("/:route", router.GetShortenLink)
-		e.Logger.Fatal(e.Start(":" + os.Getenv("PORT")))
-		// e.Logger.Fatal((e.Start(":5000")))
+		if err := e.StartTLS(":443", "/home/ubuntu/server.crt", "/home/ubuntu/server.key"); err != http.ErrServerClosed {
+			log.Fatal(err)
+		}
 	} else {
 		fmt.Println("database did not connect")
 	}
